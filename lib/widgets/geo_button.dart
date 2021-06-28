@@ -27,7 +27,9 @@ class GeoButton extends StatelessWidget {
             children: [
               Image(
                 width: 35,
-                image: AssetImage(AppStrings.FLAG_US_IMAGE),
+                image: AssetImage('assets/images/' +
+                    Server.allServers()[choosenIndex].flag +
+                    '.png'),
                 fit: BoxFit.cover,
               ),
               Spacer(),

@@ -22,7 +22,7 @@ class Server {
           ip: 'topvpnnl1.site'),
       new Server(
           coyntry: 'England',
-          flag: 'f_en',
+          flag: 'f_uk',
           password: 'cvgeRto9artD',
           username: 'vpnuser',
           ip: 'topvpnen1.site'),
