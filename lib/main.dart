@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tm_connections/connection_page.dart';
+import 'package:tm_connections/subscribtion_page.dart';
 import 'package:tm_connections/welcome_page.dart';
 
 void main() {
@@ -13,22 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'tmv8connetion',
         theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          // TODO: delete this shit!
           primarySwatch: Colors.blue,
         ),
         routes: {
+          '/': (context) => SubscribtionPage(),
           '/welcome': (context) => WelcomePage(),
           '/main': (context) => ConnectionPage(),
         },
-        initialRoute: '/welcome');
+        initialRoute: '/main');
   }
 }

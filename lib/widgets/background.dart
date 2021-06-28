@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tm_connections/strings/strings.dart';
 
 class Background extends StatelessWidget {
-  String imgUrl;
+  final String imgUrl;
   Background({Key? key, required this.imgUrl}) : super(key: key);
 
   @override

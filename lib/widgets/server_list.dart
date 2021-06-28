@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class ServerList extends StatelessWidget {
-  Function closeHandler;
+  final Function closeHandler;
   ServerList({Key? key, required this.closeHandler}) : super(key: key);
 
   @override

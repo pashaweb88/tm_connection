@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tm_connections/strings/strings.dart';
 
 class GeoButton extends StatelessWidget {
-  Function handler;
+  final Function handler;
   GeoButton({Key? key, required this.handler}) : super(key: key);
 
   @override
