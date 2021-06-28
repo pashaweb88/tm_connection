@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:tm_connections/models/server.dart';
 
 class ServerList extends StatelessWidget {
+  final List<Server> serverList;
   final Function closeHandler;
-  ServerList({Key? key, required this.closeHandler}) : super(key: key);
+  final Function chooseHandler;
+  const ServerList(
+      {Key? key,
+      required this.closeHandler,
+      required this.serverList,
+      required this.chooseHandler})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +36,9 @@ class ServerList extends StatelessWidget {
             diameterRatio: 1.2,
             itemExtent: 50.0,
             onSelectedItemChanged: (int index) {
-              print(index);
+              chooseHandler(index);
             },
-            children: [
-              Text('Argenntina'),
-              Text('Denmark'),
-              Text('Armenia'),
-              Text('Meduza'),
-              Text('Trista'),
-            ],
+            children: serverList.map((e) => Text(e.coyntry)).toList(),
           ),
         ),
       ],

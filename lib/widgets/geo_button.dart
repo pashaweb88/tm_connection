@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tm_connections/models/server.dart';
 import 'package:tm_connections/strings/strings.dart';
 
 class GeoButton extends StatelessWidget {
+  final int choosenIndex;
   final Function handler;
-  GeoButton({Key? key, required this.handler}) : super(key: key);
+  GeoButton({Key? key, required this.handler, required this.choosenIndex})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class GeoButton extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               Spacer(),
-              Text('Germany'),
+              Text(Server.allServers()[choosenIndex].coyntry),
               Spacer(),
               Icon(Icons.arrow_drop_up, color: Colors.grey[800]),
             ],

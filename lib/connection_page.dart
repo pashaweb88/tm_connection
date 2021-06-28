@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tm_connections/models/server.dart';
 import 'package:tm_connections/strings/strings.dart';
 import 'package:tm_connections/widgets/background.dart';
 import 'package:tm_connections/widgets/connect_btn.dart';
@@ -37,11 +39,16 @@ class PageContent extends StatefulWidget {
 
 class _PageContentState extends State<PageContent> {
   bool isListHow = false;
+  int choosenServerIndex = 0;
+  var connectState = FlutterVpnState.disconnected;
+
   @override
   void initState() {
+    _getSaveIndex();
     FlutterVpn.prepare();
     FlutterVpn.onStateChanged.listen((state) {
-      print('state - $state');
+      connectState = state;
+      setState(() {});
     });
     super.initState();
   }
@@ -57,20 +64,14 @@ class _PageContentState extends State<PageContent> {
               Navbar(),
               Spacer(),
               ConnectButton(
-                connectHandler: () {
-                  print('start');
-                  FlutterVpn.simpleConnect(
-                          'topvpnus1.site', 'vpnuser', 'EsJx84Fqr8cAEba')
-                      .then((value) {
-                    print('daone');
-                  });
-                  print('after');
-                },
+                connectHandler: _connectHandler,
+                conState: connectState,
               ),
               Spacer(),
               Text('Unable'),
               SizedBox(height: 20),
               GeoButton(
+                choosenIndex: choosenServerIndex,
                 handler: () {
                   _geoButtonHandler();
                 },
@@ -84,11 +85,10 @@ class _PageContentState extends State<PageContent> {
             child: Container(
               height: size.height,
               width: size.width,
-              child: ServerList(closeHandler: () {
-                setState(() {
-                  isListHow = false;
-                });
-              }),
+              child: ServerList(
+                  chooseHandler: _chooseHandler,
+                  closeHandler: _listCloseHandler,
+                  serverList: Server.allServers()),
             ),
             duration: Duration(milliseconds: 500),
             top: isListHow ? 0 : 300,
@@ -97,6 +97,36 @@ class _PageContentState extends State<PageContent> {
         ],
       ),
     );
+  }
+
+  void _chooseHandler(int index) {
+    setState(() {
+      choosenServerIndex = index;
+    });
+  }
+
+  Future<void> _listCloseHandler() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('counter', choosenServerIndex);
+    setState(() {
+      isListHow = false;
+    });
+  }
+
+  Future<void> _getSaveIndex() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int counter = prefs.getInt('counter') ?? 0;
+    setState(() {
+      choosenServerIndex = counter;
+    });
+  }
+
+  void _connectHandler() {
+    if (connectState == FlutterVpnState.connected) {
+      FlutterVpn.disconnect();
+    } else {
+      FlutterVpn.simpleConnect('topvpnus1.site', 'vpnuser', 'EsJx84Fqr8cAEba');
+    }
   }
 
   void _geoButtonHandler() {
